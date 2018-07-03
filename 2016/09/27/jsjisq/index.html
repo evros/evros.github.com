@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
+  
+  <meta name="description" content="‘SecRing | 关注网络安全,记录在IT圈子成长的故事.主要包括前端、java开发,信息安全,数据分析等,当然也有一些生活的乐趣...">
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="Evros">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="Js写简易计算器"/>
+  
+  <!--Open Graph Description-->
+  
+      <meta property="og:description" content="‘SecRing | 关注网络安全,记录在IT圈子成长的故事.主要包括前端、java开发,信息安全,数据分析等,当然也有一些生活的乐趣..." />
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="‘SecRing | 关注网络安全·信仰极简风"/>
+  <!--Type page-->
+  
+      <meta property="og:type" content="article" />
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Title -->
+  
+  <title>Js写简易计算器 - ‘SecRing | 关注网络安全·信仰极简风</title>
+
+
+  <link rel="shortcut icon" href="/favicon.png">
+
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!----------------------------
+  https://github.com/GallenHu/hexo-theme-Daily
+
+ _____            _   _
+|  __ \          (_) | |
+| |  | |   __ _   _  | |  _   _
+| |  | |  / _` | | | | | | | | |
+| |__| | | (_| | | | | | | |_| |
+|_____/   \__,_| |_| |_|  \__, |
+                          __/ |
+                         |___/
+
+    --------------------------->
+
+</head>
+
+
+<body>
+
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="/favicon.png" alt="‘SecRing | 关注网络安全·信仰极简风" height="60">
+        
+      </a>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/archives">
+                
+                  Archive
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/life">
+                
+                  Life
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/graphy">
+                
+                  Graphy
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/about">
+                
+                  About
+                
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Js写简易计算器
+            
+          </h1>
+          <p class="posted-on">
+          2016-09-27
+          </p>
+          <div class="tags-links">
+            
+              
+                <a href="/tags/JavaScript,JQuery/" rel="tag">
+                  JavaScript,JQuery
+                </a>
+              
+            
+          </div>
+        </div>
+        <!-- Post Main Content -->
+        <div class="entry-content">
+          <p><strong>JS编写简易计算器：</strong><br><code>&amp;lt;style&amp;gt;
+/*计算器层样式*/
+.caculator{
+width:300px;/*宽度*/
+border:1px solid darkred;/*边框（边框宽度 边框样式 边框颜色）*/
+}
+/*文本框样式*/
+.result{
+width:296px;/*宽度*/
+height: 50px;/*高度*/
+font-size: 30px;/*字体大小*/
+text-align: right;/*文本对齐方式*/
+}
+/*按钮层ul样式*/
+.btns{
+margin:0;/*外边距*/
+padding:0;/*内边距*/
+list-style: none;/*li列表样式*/
+margin-left:3px;/*左外边距*/
+}
+/*按钮层li样式*/
+.btns li{
+width:70px;/*宽度*/
+height:70px;/*高度*/
+line-height: 70px;/*行高(一般用来设置垂直居中)*/
+border: 1px solid darkseagreen;/*边框（边框宽度 边框样式 边框颜色）*/
+border-radius: 5px;/*边框圆角*/
+float: left;/*浮动*/
+margin-right:2px;/*右外边距*/
+margin-bottom: 2px;/*下外边距*/
+text-align: center;/*文本水平对齐方式*/
+background: lavenderblush;/*背景颜色*/
+}
+/*按钮层li鼠标经过的样式*/
+.btns li:hover{
+background: deeppink;/*背景颜色*/
+color: white;/*字体颜色*/
+}
+&amp;lt;/style&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;div class=&quot;caculator&quot;&amp;gt;
+&amp;lt;input type=&quot;text&quot; class=&quot;result&quot; id=&quot;result&quot; readonly=&quot;readonly&quot;&amp;gt;
+&amp;lt;ul class=&quot;btns&quot; id=&quot;btnsUL&quot;&amp;gt;
+&amp;lt;li class=&quot;num&quot;&amp;gt;1&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;num&quot;&amp;gt;2&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;num&quot;&amp;gt;3&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;operator&quot;&amp;gt;+&amp;lt;/li&amp;gt;
+&amp;lt;li class=&quot;num&quot;&amp;gt;4&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;num&quot;&amp;gt;5&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;num&quot;&amp;gt;6&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;operator&quot;&amp;gt;-&amp;lt;/li&amp;gt;
+&amp;lt;li class=&quot;num&quot;&amp;gt;7&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;num&quot;&amp;gt;8&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;num&quot;&amp;gt;9&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;operator&quot;&amp;gt;*&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;C&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;num&quot;&amp;gt;0&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;=&amp;lt;/li&amp;gt;&amp;lt;li class=&quot;operator&quot;&amp;gt;/&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;
+&amp;lt;!-- 清除浮动 --&amp;gt;
+&amp;lt;div style=&quot;clear: both;&quot;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&amp;lt;script&amp;gt;
+var ulDom = document.getElementById(&quot;btnsUL&quot;);//获取ul对象
+var liDoms = ulDom.getElementsByTagName(&quot;li&quot;);//获取ul里的li元素对象
+var resultDom = document.getElementById(&quot;result&quot;);//获取result文本框对象</code></p>
+<p>var num=null;//数字变量，用来保存第一次点击的数字<br>var operator=null;//运算符变量，用来保存点击的运算</p>
+<p>//利用遍历给所有的li元素绑定事件<br>for(var i=0;i&lt;liDoms.length;i++){<br>//给li对象绑定单击事件<br>liDoms[i].onclick = liHandler;<br>}</p>
+<p>//li元素单击事件的处理函数<br>function liHandler(oEvent){<br>//获取事件对象<br>if(window.event){<br>oEvent = window.event;<br>}<br>//获取事件源对象<br>var oTarget;<br>if(oEvent.srcElement){<br>oTarget = oEvent.srcElement;<br>}else{<br>oTarget = oEvent.target;<br>}<br>var className = oTarget.className;//获取当前被点击的li元素的class属性值<br>if(className==”num”){//如果是数字<br>resultDom.value += oTarget.innerHTML;//给result文本框赋值<br>num = oTarget.innerHTML;//给num变量赋值<br>}else if(className==”operator”){//如果是运算符<br>//当operator变量为空时，才能点击运算符<br>if(num!=null&amp;&amp;operator==null) {<br>resultDom.value += oTarget.innerHTML;//给result文本框赋值<br>operator = oTarget.innerHTML;//给operator运算符变量赋值<br>}<br>}else{<br>if(oTarget.innerHTML==”C”){//如果li内容为C,就是清空操作<br>resultDom.value = “”;//清空文本框<br>//恢复下面变量初始状态<br>num = null;<br>operator=null;<br>}else if(oTarget.innerHTML==”=”){//做运算操作<br>var result = eval(resultDom.value);//利用eval()方法，自动把字符串进行数学运算<br>resultDom.value = result;//把运算结果赋值回文本框<br>num=result;//把运算结果赋值给num变量，以便下次运算<br>operator=null;//把operator变量恢复初始状态<br>}<br>}<br>}<br>&lt;/script&gt;<br>&lt;hr&gt;<br>&lt;div class=”caculator”&gt;<br>&lt;input type=”text” id=”result2” class=”result” readonly=”readonly”&gt;<br>&lt;ul class=”btns” id=”btnBox2”&gt;<br>&lt;li class=”num”&gt;1&lt;/li&gt;&lt;li class=”num”&gt;2&lt;/li&gt;&lt;li class=”num”&gt;3&lt;/li&gt;&lt;li class=”operator”&gt;+&lt;/li&gt;<br>&lt;li class=”num”&gt;4&lt;/li&gt;&lt;li class=”num”&gt;5&lt;/li&gt;&lt;li class=”num”&gt;6&lt;/li&gt;&lt;li class=”operator”&gt;-&lt;/li&gt;<br>&lt;li class=”num”&gt;7&lt;/li&gt;&lt;li class=”num”&gt;8&lt;/li&gt;&lt;li class=”num”&gt;9&lt;/li&gt;&lt;li class=”operator”&gt;*&lt;/li&gt;<br>&lt;li style=”background: plum”&gt;C&lt;/li&gt;&lt;li class=”num”&gt;0&lt;/li&gt;&lt;li style=”background: darkseagreen”&gt;=&lt;/li&gt;&lt;li class=”operator”&gt;/&lt;/li&gt;<br>&lt;/ul&gt;<br>&lt;div style=”clear:both;”&gt;&lt;/div&gt;<br>&lt;/div&gt;<br>&lt;script&gt;<br>var ulDom2 = document.getElementById(“btnBox2”);<br>var liDoms2 = ulDom2.getElementsByTagName(“li”);<br>var resultDom2 = document.getElementById(“result2”);<br>var num1=null,num2=null;//定义保存第一个数字和第二个数字的变量<br>var operator=null;//定义保存运算符的变量</p>
+<p>//给所有li元素绑定事件<br>for(var i=0;i&lt;liDoms2.length;i++) {<br>liDoms2[i].onclick = function (oEvent) {<br>if (window.event) {<br>oEvent = window.event;<br>}<br>var oTarget;<br>if (oEvent.srcElement) {<br>oTarget = oEvent.srcElement;<br>} else {<br>oTarget = oEvent.target;<br>}</p>
+<p>if(oTarget.className.indexOf(“num”)&gt;=0){//点击数字li时<br>if(operator==null){//如果operator运算符为空，证明用户点击的是第一个数字<br>resultDom2.value += oTarget.innerHTML;//把li的文本累加到结果文本中<br>num1 = parseInt(resultDom2.value);//把最后的数字强制转化为整形后，保存到num1<br>}else{//如果operator运算符不为空，证明用户点击的是第二个数字<br>resultDom2.value += oTarget.innerHTML;//把li的文本累加到结果文本中<br>num2 = parseInt(resultDom2.value);//把最后的数字强制转化为整形后，保存到num1<br>}<br>}else if(oTarget.className.indexOf(“operator”)&gt;=0){//点击操作符li时<br>//当第一个数字num1不为空时，才执行点击运算符的操作<br>if(num1!=null) {<br>operator = oTarget.innerHTML;//保存运算符<br>resultDom2.value = “”;//清空结果文本框<br>}<br>}else {<br>if (oTarget.innerHTML == “C”) {//点击清空C按钮li时<br>resultDom2.value = “”;//清空结果文本框<br>num1 = null;//清空num1<br>num2 = null;//清空num2<br>operator = null;//清空operator运算符<br>} else if (oTarget.innerHTML == “=”) {//点击等于号li时<br>//按照operator运算符进行相应的运算，把结果赋值到结果文本框中<br>switch (operator) {<br>case “+”:<br>resultDom2.value = num1 + num2;<br>break;<br>case “-“:<br>resultDom2.value = num1 - num2;<br>break;<br>case “<em>“:<br>resultDom2.value = num1 </em> num2;<br>break;<br>case “/“:<br>resultDom2.value = num1 / num2;<br>break;<br>default:<br>resultDom2.value = “出错了！”;<br>}<br>num1 = parseFloat(resultDom2.value);//最后把运算的结果赋值给num1，可以继续进行下一次的运算<br>num2 = null;//清空num2<br>operator = null;//清空operator运算符<br>}<br>}<br>}<br>}<br>&lt;/script&gt;<br>给初学javascript的童鞋一个参考；</p>
+
+        </div>
+      </article>
+    </div>
+    <!-- Comments -->
+    <div class="container">
+      
+<section id="comment">
+  <!-- <h1 class="title">留言</h1> -->
+
+  
+</section>
+
+
+    </div>
+    <!-- Pre or Next -->
+    <div class="nav-links">
+      
+        <div class="nav-previous">
+          <a href="/2016/09/29/hexo-up/" rel="prev"><span class="meta-arraw meta-arraw-left"></span> 上一页</a>
+        </div>
+      
+      
+        <div class="nav-next">
+          <a href="/2016/09/22/hun/" rel="prev">下一页 <span class="meta-arraw meta-arraw-right"></span></a>
+        </div>
+      
+    </div>
+
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <!-- Footer-widgets -->
+<div class="footer-widgets">
+  <div class="row inside-wrapper">
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">关于本站</h1>
+        <div class="custom-widget-content">
+          
+          ‘SecRing | 关注网络安全,记录在IT圈子成长的故事.主要包括前端、java开发,信息安全,数据分析等,当然也有一些生活的乐趣...
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">与我联系</h1>
+        <div class="widget-text">
+          
+            
+              <a href="https://github.com/GallenHu" class="icon icon-github" target="_blank">github</a>
+            
+          
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">站内搜索</h1>
+        <div class="widget-text">
+          <form onSubmit="return appDaily.submitSearch('')">
+            <p>
+              <input type="text" placeholder="search..." id="homeSearchInput">
+            </p>
+            <!-- <input type="submit" value="GO"> -->
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>'SecRing &copy; 2018</span>&nbsp;|
+	<span id="busuanzi_container_site_uv">&nbsp;您是第<span id="busuanzi_value_site_uv"></span>个小伙伴(•̀ᴗ•́)و</span>
+	<span id="busuanzi_container_site_pv">第<span id="busuanzi_value_site_pv"></span>个脚印!&nbsp;</span>
+    <span><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></span>
+  </p>
+</footer>
+
+
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
+
+
+
+
+
+</body>
+
+</html>

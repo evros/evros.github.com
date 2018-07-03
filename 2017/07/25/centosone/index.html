@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
+  
+  <meta name="description" content="‘SecRing | 关注网络安全,记录在IT圈子成长的故事.主要包括前端、java开发,信息安全,数据分析等,当然也有一些生活的乐趣...">
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="Evros">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="Centos 6.5版本以上重装Mysql"/>
+  
+  <!--Open Graph Description-->
+  
+      <meta property="og:description" content="‘SecRing | 关注网络安全,记录在IT圈子成长的故事.主要包括前端、java开发,信息安全,数据分析等,当然也有一些生活的乐趣..." />
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="‘SecRing | 关注网络安全·信仰极简风"/>
+  <!--Type page-->
+  
+      <meta property="og:type" content="article" />
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Title -->
+  
+  <title>Centos 6.5版本以上重装Mysql - ‘SecRing | 关注网络安全·信仰极简风</title>
+
+
+  <link rel="shortcut icon" href="/favicon.png">
+
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!----------------------------
+  https://github.com/GallenHu/hexo-theme-Daily
+
+ _____            _   _
+|  __ \          (_) | |
+| |  | |   __ _   _  | |  _   _
+| |  | |  / _` | | | | | | | | |
+| |__| | | (_| | | | | | | |_| |
+|_____/   \__,_| |_| |_|  \__, |
+                          __/ |
+                         |___/
+
+    --------------------------->
+
+</head>
+
+
+<body>
+
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="/favicon.png" alt="‘SecRing | 关注网络安全·信仰极简风" height="60">
+        
+      </a>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/archives">
+                
+                  Archive
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/life">
+                
+                  Life
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/graphy">
+                
+                  Graphy
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/about">
+                
+                  About
+                
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Centos 6.5版本以上重装Mysql
+            
+          </h1>
+          <p class="posted-on">
+          2017-07-25
+          </p>
+          <div class="tags-links">
+            
+              
+                <a href="/tags/笔记/" rel="tag">
+                  笔记
+                </a>
+              
+            
+          </div>
+        </div>
+        <!-- Post Main Content -->
+        <div class="entry-content">
+          <p>离第一次在centos上配置这些东西有一段时间了，也有点忘记了，So做了个笔记</p>
+<p>1，删除Mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum remove  mysql mysql-server mysql-libs mysql-server;</span><br><span class="line"></span><br><span class="line">find / -name mysql 将找到的相关东西delete掉；</span><br><span class="line"></span><br><span class="line">rpm -qa|grep mysql(查询出来的东东yum remove掉)</span><br></pre></td></tr></table></figure>
+<p>2，安装Mysql<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install  mysql mysql-server mysql-libs mysql-server;</span><br></pre></td></tr></table></figure></p>
+<p>因为mysql数据库在Linux上实在是太流行了，所以目前下载的主流Linux系统版本基本上都集成了mysql数据库在里面，我们可以通过如下命令来查看我们的操作系统上是否已经安装了mysql数据库<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@xiaoluo ~]# rpm -qa | grep mysql　　// 这个命令就会查看该操作系统上是否已经安装了mysql数据库</span><br></pre></td></tr></table></figure></p>
+<p>有的话，我们就通过 rpm -e 命令 或者 rpm -e –nodeps 命令来卸载掉<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@xiaoluo ~]# rpm -e mysql　　// 普通删除模式</span><br><span class="line">[root@xiaoluo ~]# rpm -e --nodeps mysql　　// 强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除</span><br></pre></td></tr></table></figure></p>
+<p>在删除完以后我们可以通过 rpm -qa | grep mysql 命令来查看mysql是否已经卸载成功！</p>
+<p>三、通过yum来进行mysql的安装</p>
+<p>我是通过yum的方式来进行mysql的数据库安装，首先我们可以输入 yum list | grep mysql 命令来查看yum上提供的mysql数据库可下载的版本：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@xiaoluo ~]# yum list | grep mysql</span><br></pre></td></tr></table></figure></p>
+<p>就可以得到yum服务器上mysql数据库的可下载版本信息：</p>
+<p>然后我们可以通过输入 yum install -y mysql-server mysql mysql-devel 命令将mysql mysql-server mysql-devel都安装好(注意:安装mysql时我们并不是安装了mysql客户端就相当于安装好了mysql数据库了，我们还需要安装mysql-server服务端才行)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@xiaoluo ~]# yum install -y mysql-server mysql mysql-deve</span><br></pre></td></tr></table></figure>
+<p>在等待了一番时间后，yum会帮我们选择好安装mysql数据库所需要的软件以及其它附属的一些软件</p>
+<p>我们发现，通过yum方式安装mysql数据库省去了很多没必要的麻烦，当出现下面的结果时，就代表mysql数据库安装成功了</p>
+<p>此时我们可以通过如下命令，查看刚安装好的mysql-server的版本</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@xiaoluo ~]# rpm -qi mysql-server</span><br><span class="line"> ``` </span><br><span class="line"></span><br><span class="line">我们安装的mysql-server并不是最新版本，如果你想尝试最新版本，那就去mysql官网下载rpm包安装就行了，至此我们的mysql数据库已经安装完成了。</span><br><span class="line"></span><br><span class="line">四、mysql数据库的初始化及相关配置</span><br><span class="line"></span><br><span class="line">我们在安装完mysql数据库以后，会发现会多出一个mysqld的服务，这个就是咱们的数据库服务，我们通过输入 service mysqld start 命令就可以启动我们的mysql服务。</span><br><span class="line"></span><br><span class="line">注意：如果我们是第一次启动mysql服务，mysql服务器首先会进行初始化的配置，如：</span><br></pre></td></tr></table></figure>
+<p>[root@xiaoluo ~]# service mysqld start<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">初始化 MySQL 数据库： WARNING: The host &apos;xiaoluo&apos; could not be looked up with resolveip.</span><br><span class="line">This probably means that your libc libraries are not 100 % compatible</span><br><span class="line">with this binary MySQL version. The MySQL daemon, mysqld, should work</span><br><span class="line">normally with the exception that host name resolving will not work.</span><br><span class="line">This means that you should use IP addresses instead of hostnames</span><br><span class="line">when specifying MySQL privileges !</span><br><span class="line">Installing MySQL system tables...</span><br><span class="line">OK</span><br><span class="line">Filling help tables...</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">To start mysqld at boot time you have to copy</span><br><span class="line">support-files/mysql.server to the right place for your system</span><br><span class="line"></span><br><span class="line">PLEASE REMEMBER TO SET A PASSWORD FOR THE MySQL root USER !</span><br><span class="line">To do so, start the server, then issue the following commands:</span><br><span class="line"></span><br><span class="line">/usr/bin/mysqladmin -u root password &apos;new-password&apos;</span><br><span class="line">/usr/bin/mysqladmin -u root -h xiaoluo password &apos;new-password&apos;</span><br><span class="line"></span><br><span class="line">Alternatively you can run:</span><br><span class="line">/usr/bin/mysql_secure_installation</span><br><span class="line"></span><br><span class="line">which will also give you the option of removing the test</span><br><span class="line">databases and anonymous user created by default.  This is</span><br><span class="line">strongly recommended for production servers.</span><br><span class="line"></span><br><span class="line">See the manual for more instructions.</span><br><span class="line"></span><br><span class="line">You can start the MySQL daemon with:</span><br><span class="line">cd /usr ; /usr/bin/mysqld_safe &amp;</span><br><span class="line"></span><br><span class="line">You can test the MySQL daemon with mysql-test-run.pl</span><br><span class="line">cd /usr/mysql-test ; perl mysql-test-run.pl</span><br><span class="line"></span><br><span class="line">Please report any problems with the /usr/bin/mysqlbug script!</span><br><span class="line"></span><br><span class="line">[确定]</span><br><span class="line">正在启动 mysqld：                                            [确定]</span><br></pre></td></tr></table></figure></p>
+<p>这时我们会看到第一次启动mysql服务器以后会提示非常多的信息，目的就是对mysql数据库进行初始化操作，当我们再次重新启动mysql服务时，就不会提示这么多信息了，如：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@xiaoluo ~]# service mysqld restart</span><br></pre></td></tr></table></figure>
+<p>停止 mysqld：                                             [确定]<br>正在启动 mysqld：                                          [确定]</p>
+<p>我们在使用mysql数据库时，都得首先启动mysqld服务，我们可以 通过  chkconfig –list | grep mysqld 命令来查看mysql服务是不是开机自动启动，如：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@xiaoluo ~]# chkconfig --list | grep mysqld</span><br><span class="line">mysqld             0:关闭    1:关闭    2:关闭    3:关闭    4:关闭    5:关闭    6:关闭</span><br></pre></td></tr></table></figure>
+<p>我们发现mysqld服务并没有开机自动启动，我们当然可以通过 chkconfig mysqld on 命令来将其设置成开机启动，这样就不用每次都去手动启动了</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@xiaoluo ~]# chkconfig mysqld on</span><br><span class="line">[root@xiaoluo ~]# chkconfig --list | grep mysql</span><br><span class="line">mysqld             0:关闭    1:关闭    2:启用    3:启用    4:启用    5:启用    6:关闭</span><br><span class="line"> ``` </span><br><span class="line"></span><br><span class="line">mysql数据库安装完以后只会有一个root管理员账号，但是此时的root账号还并没有为其设置密码，在第一次启动mysql服务时，会进行数据库的一些初始化工作，在输出的一大串信息中，我们看到有这样一行信息 ：</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">/usr/bin/mysqladmin -u root password &apos;new-password&apos;　　// 为root账号设置密码</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">所以我们可以通过 该命令来给我们的root账号设置密码(注意：这个root账号是mysql的root账号，非Linux的root账号)</span><br></pre></td></tr></table></figure>
+<p>[root@xiaoluo ~]# mysqladmin -u root password ‘root’　　// 通过该命令给root账号设置密码为 root<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">此时我们就可以通过 mysql -u root -p 命令来登录我们的mysql数据库了</span><br><span class="line"></span><br><span class="line">五、mysql数据库的主要配置文件</span><br><span class="line"></span><br><span class="line">1./etc/my.cnf 这是mysql的主配置文件</span><br><span class="line"></span><br><span class="line">我们可以查看一下这个文件的一些信息</span><br></pre></td></tr></table></figure></p>
+<p>[root@xiaoluo etc]# ls my.cnf<br>my.cnf<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure></p>
+<p>[root@xiaoluo etc]# cat my.cnf<br>[mysqld]<br>datadir=/var/lib/mysql<br>socket=/var/lib/mysql/mysql.sock<br>user=mysql<br>Disabling symbolic-links is recommended to prevent assorted security risks<br>symbolic-links=0<br>[mysqld_safe]<br>log-error=/var/log/mysqld.log<br>pid-file=/var/run/mysqld/mysqld.pid<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2./var/lib/mysql   mysql数据库的数据库文件存放位置</span><br><span class="line"></span><br><span class="line">我们的mysql数据库的数据库文件通常是存放在了/ver/lib/mysql这个目录下</span><br></pre></td></tr></table></figure></p>
+<p>[root@xiaoluo ~]# cd /var/lib/mysql/<br>[root@xiaoluo mysql]# ls -l<br>总用量 20488<br>-rw-rw—-. 1 mysql mysql 10485760 4月   6 22:01 ibdata1<br>-rw-rw—-. 1 mysql mysql  5242880 4月   6 22:01 ib_logfile0<br>-rw-rw—-. 1 mysql mysql  5242880 4月   6 21:59 ib_logfile1<br>drwx——. 2 mysql mysql     4096 4月   6 21:59 mysql　　// 这两个是mysql数据库安装时默认的两个数据库文件<br>srwxrwxrwx. 1 mysql mysql        0 4月   6 22:01 mysql.sock<br>drwx——. 2 mysql mysql     4096 4月   6 21:59 test　　// 这两个是mysql数据库安装时默认的两个数据库文件<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">我们可以自己创建一个数据库，来验证一下该数据库文件的存放位置</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">创建一个我们自己的数据库：</span><br><span class="line"></span><br><span class="line"> ```mysql&gt; create database xiaoluo;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+ <figure class="highlight plain"><figcaption><span>mysql]# ls -l</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">总用量 20492</span><br><span class="line">-rw-rw----. 1 mysql mysql 10485760 4月   6 22:01 ibdata1</span><br><span class="line">-rw-rw----. 1 mysql mysql  5242880 4月   6 22:01 ib_logfile0</span><br><span class="line">-rw-rw----. 1 mysql mysql  5242880 4月   6 21:59 ib_logfile1</span><br><span class="line">drwx------. 2 mysql mysql     4096 4月   6 21:59 mysql</span><br><span class="line">srwxrwxrwx. 1 mysql mysql        0 4月   6 22:01 mysql.sock</span><br><span class="line">drwx------. 2 mysql mysql     4096 4月   6 21:59 test</span><br><span class="line">drwx------. 2 mysql mysql     4096 4月   6 22:15 xiaoluo　　// 这个就是我们刚自己创建的xiaoluo数据库</span><br></pre></td></tr></table></figure>
+<pre><code>[root@xiaoluo mysql]# cd xiaoluo/
+[root@xiaoluo xiaoluo]# ls
+db.opt
+</code></pre><p>3./var/log mysql数据库的日志输出存放位置</p>
+<p>我们的mysql数据库的一些日志输出存放位置都是在/var/log这个目录下</p>
+<pre><code>[root@xiaoluo xiaoluo]# cd 
+[root@xiaoluo ~]# cd /var/log
+</code></pre> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@xiaoluo log]# ls</span><br><span class="line">amanda                cron           maillog-20130331   spice-vdagent.log</span><br><span class="line">anaconda.ifcfg.log    cron-20130331  mcelog             spooler</span><br><span class="line">anaconda.log          cups           messages           spooler-20130331</span><br><span class="line">anaconda.program.log  dirsrv         messages-20130331  sssd</span><br><span class="line">anaconda.storage.log  dmesg          mysqld.log         tallylog</span><br><span class="line">anaconda.syslog       dmesg.old      ntpstats           tomcat6</span><br><span class="line">anaconda.xlog         dracut.log     piranha            wpa_supplicant.log</span><br><span class="line">anaconda.yum.log      gdm            pm-powersave.log   wtmp</span><br><span class="line">audit                 httpd          ppp                Xorg.0.log</span><br><span class="line">boot.log              ibacm.log      prelink            Xorg.0.log.old</span><br><span class="line">btmp                  lastlog        sa                 Xorg.1.log</span><br><span class="line">btmp-20130401         libvirt        samba              Xorg.2.log</span><br><span class="line">cluster               luci           secure             Xorg.9.log</span><br><span class="line">ConsoleKit            maillog        secure-20130331    yum.log</span><br></pre></td></tr></table></figure>
+<p>其中mysqld.log 这个文件就是我们存放我们跟mysql数据库进行操作而产生的一些日志信息，通过查看该日志文件，我们可以从中获得很多信息</p>
+<p>因为我们的mysql数据库是可以通过网络访问的，并不是一个单机版数据库，其中使用的协议是 tcp/ip 协议，我们都知道mysql数据库绑定的端口号是 3306 ，所以我们可以通过 netstat -anp 命令来查看一下，Linux系统是否在监听 3306 这个端口号：</p>
+<p>结果如上所示，Linux系统监听的3306端口号就是我们的mysql数据库！</p>
+
+        </div>
+      </article>
+    </div>
+    <!-- Comments -->
+    <div class="container">
+      
+<section id="comment">
+  <!-- <h1 class="title">留言</h1> -->
+
+  
+</section>
+
+
+    </div>
+    <!-- Pre or Next -->
+    <div class="nav-links">
+      
+        <div class="nav-previous">
+          <a href="/2017/07/25/Coding/" rel="prev"><span class="meta-arraw meta-arraw-left"></span> 上一页</a>
+        </div>
+      
+      
+        <div class="nav-next">
+          <a href="/2017/07/12/720dcim/" rel="prev">下一页 <span class="meta-arraw meta-arraw-right"></span></a>
+        </div>
+      
+    </div>
+
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <!-- Footer-widgets -->
+<div class="footer-widgets">
+  <div class="row inside-wrapper">
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">关于本站</h1>
+        <div class="custom-widget-content">
+          
+          ‘SecRing | 关注网络安全,记录在IT圈子成长的故事.主要包括前端、java开发,信息安全,数据分析等,当然也有一些生活的乐趣...
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">与我联系</h1>
+        <div class="widget-text">
+          
+            
+              <a href="https://github.com/GallenHu" class="icon icon-github" target="_blank">github</a>
+            
+          
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">站内搜索</h1>
+        <div class="widget-text">
+          <form onSubmit="return appDaily.submitSearch('')">
+            <p>
+              <input type="text" placeholder="search..." id="homeSearchInput">
+            </p>
+            <!-- <input type="submit" value="GO"> -->
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>'SecRing &copy; 2018</span>&nbsp;|
+	<span id="busuanzi_container_site_uv">&nbsp;您是第<span id="busuanzi_value_site_uv"></span>个小伙伴(•̀ᴗ•́)و</span>
+	<span id="busuanzi_container_site_pv">第<span id="busuanzi_value_site_pv"></span>个脚印!&nbsp;</span>
+    <span><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></span>
+  </p>
+</footer>
+
+
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
+
+
+
+
+
+</body>
+
+</html>

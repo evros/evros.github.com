@@ -40,7 +40,7 @@
   <title>‘SecRing | 关注网络安全·信仰极简风 - Some Story . Never Settle</title>
 
 
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="shortcut icon" href="/zl-hexo.png">
 
   <!-- Custom CSS/Sass -->
   <link rel="stylesheet" href="/css/style.css">
@@ -135,34 +135,12 @@
 <div class="container">
   <article class="post">
     
-    <h1 class="entry-title">
-      <a href="/2015/02/12/four/" rel="bookmark">
-        【Four】Get it！  
-      </a>
-    </h1>
-    
+      
+      
 
-    <p class="posted-on">
-    2015-02-12
-    </p>
-    <div class="tags-links">
-      
-      <a href="/tags/笔记/" rel="tag">
-        笔记
-      </a>
-      
-    </div>
-  </article>
-</div>
-        </div> 
-      
-    
-      
-        <div class="odd">
-          
-
-<div class="container">
-  <article class="post">
+      <a href="/2014/12/19/onerfid/">
+          <img src="/img/yulan/rfid-1.png" alt="【转载】RFID入门：Mifare1智能水卡破解分析" class="attachment-post-thumbnail">
+        </a>
     
     <h1 class="entry-title">
       <a href="/2014/12/19/onerfid/" rel="bookmark">
@@ -172,53 +150,7 @@
     
     <div class="entry-content">
       <p>
-        <div id="contenttxt">
-
-<p>免责声明：本站提供安全工具、程序(方法)可能带有攻击性，仅供安全研究与教学之用，风险自负!</p>
-<p><strong>文章的最开始，先来致敬RadioWar。一直手痒RFID这个领域，准备了一段时间，开始入门RFID。**</strong><br>**</p>
-<p><strong>先来普及一下基础知识：</strong></p>
-<p>RFID即为射频识别。NFC近场通信。很多人把NFC和RFID混为一谈，但实际上NFC可以理解为“以RFID技术为基础的一种产品”。</p>
-<p>RFID技术中所衍生的产品大概有三大类：无源RFID产品、有源RFID产品、半有源RFID产品。根据RFID Tag的工作方式，有可分为被动，主动、半主动三种。最常见的就是被动式的了。我们目前接触的多的就是无源、被动式产品，其中最为广泛常见的就是MIFARE Classic 1K卡，简称M1卡、S50卡。M1卡有从0-15共16个扇区，每个扇区配备了从0-3共4个段，每个段可以保存16字节的内容。每个扇区的03段是用来保存KeyA，KeyB和控制位的，因为M1卡允许每个扇区有一对独立的密码保护，这样能够更加灵活的控制数据的操作，控制位就是这个扇区各种详细权限计算出来的结果。每张M1卡都有一个全球唯一的UID号，这个UID号保存在卡的00扇区的00段，也称为厂商段，其中前4个字节是卡的UID，第5个字节是卡UID的校验位，剩下的是厂商数据。并且这个段在出厂之前就会被设置了写入保护，只能读取不能修改，当然也有例外，有种叫UID卡的特殊卡，UID是没有设置保护的，其实就是厂家不按规范生产的卡。</p>
-<p><strong>更多的资料请百度、谷歌之，就目前来说我们简单了解下就够了，有了这些大体的了解，我们就开始今天尝试破解一张水卡（洗澡用，宿舍常见）试试。</strong></p>
-<p><pre class="prettyprint lang-html prettyprinted"><span class="pln">工具：ACR122U-A9，UID可写白卡，待破水卡<br>平台&amp;软件：Win7x64、XP：RadioWar的NFCGUI-Pro，简化版的mfocgui。<br>Kali平台：mfoc,，nfc-mfclassic。</span></pre><br><strong>0×00**</strong>开头**</p>
-<p>关于ACR122U-A9这个读卡器，虽然比不上PM3那么神通广大，但是对于入门学习来说绝对算得上神器了。某宝上一搜一堆，很多店都卖165元左右（爆个内幕；其实都是一家）。然后就是UID可写的卡了，大约3元一张。平台选择这两个是因为入门来说自然首选Win平台，但是其中出现了一些问题，虽然失败但也贴出来供大家查错。</p>
-<p><strong>0×01**</strong>分析、确定卡片**</p>
-<p><strong>首先确定卡片是M1卡，且数据是保存在卡里而不是服务器上的。</strong>通过图1，我们可以看到机器只有电源线，没有网线，且机器已经很老了，肯定不能是无线方式联接。</p>
-<p>我想到了一种“非正式”的一种鉴别方法，大多数注明“不记名不挂失”的卡片都是数据存放在本地的IC卡，否则他们完全可以提供记名挂失的功能的，对吧？</p>
-<p>所以我们有把握这肯定就是IC卡，金额数据存放在卡里的了。那么对于这种卡，<strong>我们有两种让钱“无限”的方式：1.直接复制现有的卡，因为金额可以任意复制，C/V模式，但是这样太没有技术含量，而且成了纯粹的为了利益了；2.尝试了解卡片内数据块的实际意义作用，找到数据加密方法。</strong>对应的写出解密方法，这样卡内余额就我们随意控制了。当然，第二种方式是以第一种方式为基础的，所以我们一步一步来尝试。</p>
-<p><a href="http://image.3001.net/images/20141218/14188685913163.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20141218/14188685913163.png%21small" alt="" title="image1.png"></a></p>
-<p><strong>0x02Win**</strong>尝试**</p>
-<p>根据网上提供的资料（<a href="http://bobylive.com/static/1491），我们尝试使用验证漏洞，也就是利用mfocgui破解M1卡的密钥。先是Win7" target="_blank" rel="noopener">http://bobylive.com/static/1491），我们尝试使用验证漏洞，也就是利用mfocgui破解M1卡的密钥。先是Win7</a> x64，点击按钮即可一键自动破解，但是出现了问题。当试到05扇区的时候，程序就开始报错，然后ACR122U莫名与PC断开联接。网上搜索无果。尝试RadioWar的NFCGUI-PRO，同样的问题。同样的软件，后来换到XP,问题依旧。说明在Win平台上还是多少有点问题。不如Linux上的兼容性好。</p>
-<p><a href="http://image.3001.net/images/20141218/14188685931039.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20141218/14188685931039.png%21small" alt="" title="image2.png"></a></p>
-<p><strong>0x03Kali**</strong>尝试**</p>
-<p>值得一提的是，Kali原生支持ACR122U的，而且里面内置了很多的NFC安全研究的工具，极大的方便了我们的工作。（注意尽量不要用Win上的Kali虚拟机，因为USB口还是通过Win平台，所以兼容性问题还是可能存在，我的就会出现Usb Timeout错误）</p>
-<p><strong>进入Kali我们能看到很多RFID/NFC的工具。我们用到的是mfoc和nfc-mfclassic这两个工具。</strong>Mfoc是利用验证漏洞破解key的一个工具，而nfc-mfclassic则是对卡片进行读写的工具，我们可以从卡片里dump出来数据到本地，然后利用hexeditr分析编辑，再将数据导入到卡里去。</p>
-<p><a href="http://image.3001.net/images/20141218/14188685955471.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20141218/14188685955471.png%21small" alt="" title="image3.png"></a></p>
-<p>由于网上很少有这类工具的中文使用说明，我在此一并给大家介绍了：</p>
-<p><pre class="prettyprint lang-html prettyprinted"><span class="pln">mfoc: invalid option – ‘-‘<br>Usage: mfoc [-h] [-k key]… [-P probnum] [-Ttolerance] [-O output]<br>  h      打印帮助<br>  k      将一个新的密钥添加到密钥表里<br>  P      每扇区测试多少个密钥（默认20）<br>  T      随机和随机范围<br>  O      输出到的文件</span></pre><br>为了以后使用方便，我们将破解的命令写成shell脚本：crack2file</p>
-<p><pre class="prettyprint lang-html prettyprinted"><span class="pln">if [ $# -lt 1 ]<br>then<br>echo “Usage:”<br>echo “ readto dumpFile”<br>else<br>mfoc -k ffffeeeedddd -O $1 #这句是我们真正用到的命令,这里的key以后可以换成我们破解出来的key，加快速度<br>fi</span></pre><br><strong>我们连接上ACR122U到电脑，输入./crack2file tmp/unknow.mdf，就会开始自动破解了。</strong></p>
-<p><a href="http://image.3001.net/images/20141218/14188685961195.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20141218/14188685961195.png%21small" alt="" title="image4.png"></a></p>
-<p><a href="http://image.3001.net/images/20141218/14188685995081.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20141218/14188685995081.png%21small" alt="" title="image5.png"></a></p>
-<p>如果这张卡存在默认密码的话，理论上我们就能得到全部密钥。稍等几分钟，我们看到mfoc提示成功，dump文件已经得到，保存备份几次。然后我们再次去水机处刷卡，消费1元之后余额为8.00。因为我们已经有卡的加密密钥了，所以我们不必再次破解，我们通过使用nfc-mfclassic工具，使用已经有的导出文件再次导出卡内数据。</p>
-<p><a href="http://image.3001.net/images/20141218/14188686005799.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20141218/14188686005799.png%21small" alt="" title="image6.png"></a></p>
-<p>同样再给些中文使用帮助：</p>
-<p><pre class="prettyprint lang-html prettyprinted"><span class="pln">r|R|w|W 从卡片中读取数据到文件中(r)，读取文件然后写入到卡片中（w）。或者如果你是使用uid可写卡，使用强制读取R，强制写入W可以改写uid。<br>a|A|b|B  使用keyA还是keyB，当有错误的时候就停止(a,b)或者忽略错误(A|B)<br></span><span class="tag">&lt;dump.mfd&gt;</span><span class="pln"> dump到的文件<br></span><span class="tag">&lt;keys.mfd&gt;</span><span class="pln">  key文件<br>F           如果UID不一样的话也继续</span></pre><br><strong>我们使用命令：nfc-mfclassic r A 600.mfd tmp/unknow.mfd f（建议写成脚本）。</strong></p>
-<p><strong>0×04**</strong>分析导出的Dump<strong>**文件</strong></p>
-<p>成功导出变化了的dump文件。然后我们用hexeditor（这个会自动变成正常阅读顺序，当然某些数据不懂时我们可以尝试使用hexdump，这个是反端的顺序，可能会有新的发现）。打开分析。通过对比文件变化，我们发现有一部分内容变化了。</p>
-<p><pre class="prettyprint lang-bash prettyprinted"><span class="lit">04</span><span class="pln"> </span><span class="lit">0A</span><span class="pln"> </span><span class="lit">52</span><span class="pln"> </span><span class="lit">18</span><span class="pln"> </span><span class="lit">7B</span><span class="pln"> EF </span><span class="lit">03</span><span class="pln"> </span><span class="lit">20</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">6A</span><span class="pln"> C8 </span><span class="lit">01</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">3C00</span><span class="pln"> </span><span class="lit">1E</span><br><span class="lit">4F</span><span class="pln"> </span><span class="lit">4B</span><span class="pln"> </span><span class="lit">18</span><span class="pln"> </span><span class="lit">7B</span><span class="pln"> EF </span><span class="lit">03</span><span class="pln"> </span><span class="lit">20</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">6A</span><span class="pln"> C8 </span><span class="lit">01</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">3C</span><span class="pln"> </span><span class="lit">001E</span><span class="pln"> </span><span class="lit">00</span><br><span class="lit">04</span><span class="pln"> </span><span class="lit">0A</span><span class="pln"> </span><span class="lit">4B</span><span class="pln"> </span><span class="lit">18</span><span class="pln"> </span><span class="lit">7B</span><span class="pln"> EF </span><span class="lit">03</span><span class="pln"> </span><span class="lit">20</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">6A</span><span class="pln"> C8 </span><span class="lit">01</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">3C00</span><span class="pln"> </span><span class="lit">1E</span><span class="pln">  </span><span class="lit">8.00</span><span class="pln"></span></pre></p>
-<p><span class="lit">04</span><span class="pln"> </span><span class="lit">0A</span><span class="pln"> </span><span class="lit">52</span><span class="pln"> </span><span class="lit">18</span><span class="pln"> </span><span class="lit">7B</span><span class="pln"> EF </span><span class="lit">03</span><span class="pln"> </span><span class="lit">84</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">7C</span><span class="pln"> EB </span><span class="lit">01</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">3C00</span><span class="pln"> </span><span class="lit">1E</span><br><span class="lit">4F</span><span class="pln"> </span><span class="lit">4B</span><span class="pln"> </span><span class="lit">18</span><span class="pln"> </span><span class="lit">7B</span><span class="pln"> EF </span><span class="lit">03</span><span class="pln"> </span><span class="lit">84</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">7C</span><span class="pln"> EB </span><span class="lit">01</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">3C</span><span class="pln"> </span><span class="lit">001E</span><span class="pln"> </span><span class="lit">00</span><br><span class="lit">04</span><span class="pln"> </span><span class="lit">0A</span><span class="pln"> </span><span class="lit">4B</span><span class="pln"> </span><span class="lit">18</span><span class="pln"> </span><span class="lit">7B</span><span class="pln"> EF </span><span class="lit">03</span><span class="pln"> </span><span class="lit">84</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">7C</span><span class="pln"> EB </span><span class="lit">01</span><span class="pln"> </span><span class="lit">00</span><span class="pln"> </span><span class="lit">3C00</span><span class="pln"> </span><span class="lit">1E</span><span class="pln">  </span><span class="lit">9.00</span><br>这其中hex(900)=0×384,hex(800)=0×320，所以这三行的对应数值就是金额。后面7C EB 01和6A C8 01是变化的内容。<strong>然后拿这张卡我再去刷一次，确定金额已经正确分析出来，但是后面的6A C8 01变为了6A C8 02。</strong>既然这三次变化没有规律，为了确认后面的变化部分是否与时间有关，我同一个数据复制了两张卡，然后先后到机器上刷了一样的钱，然后回来再dump出来，发现两张卡内的数据一模一样，所以推断与时间无关。但是！就因为最开始下的这个结论，导致我在解密的路上越走越偏。那么我猜测可能是金额与UID或者某部分内容通过异或，或，与等常见的运算。我尝试算了很长时间很多种可能性，最终没能算出来。暂时只好将卡多复制几次，继续慢慢尝试。</p>
-<p><strong>0×05转折点</strong></p>
-<p>接连刷了几天，得到了很多数据。直到12月2号中午，再次把所有数据放在一起对比时，忽然发现卡里面内容有点奇怪。当我用变化的6A C8这部分数值与UID异或的时候，组成的内容再加上后面的01好像有点规律了：</p>
-<p><pre class="prettyprint lang-html prettyprinted"><span class="pln">最开始测试          继续测试   昨天       今天<br>112701   112702    112901    120101    120201</span></pre><br>怎么忽然从1127变成1201然后是1202了？今天是12月2号！也就是说我前几天测试的时候应该是11月27日。112701，112702，是指第一次刷卡，第二次刷卡。然后至于那次单独测试是不是与时间有关，因为我是在同一天测试的数据，而它只记录日期。所以自然数据就一样了。</p>
-<p>知道了这些，我们就把卡上所有信息都掌握了。其他字段都是些无关紧要且不会变的东西，因为卡是匿名买的，不记名不登记。</p>
-<p><strong>了解了这些，**</strong>我们修改为8888即为88.88元试试，hex(8888)=0x22b8。然后写入卡内，去刷，成功了！**</p>
-<p>如下图</p>
-<p><a href="http://image.3001.net/images/20141218/14188686016553.png" target="_blank" rel="noopener"><img src="http://image.3001.net/images/20141218/14188686016553.png%21small" alt="" title="image7.png"></a></p>
-<p>但是，当我再次刷准备拍照的时候发现卡失效了，换一个机器，发现刷一次之后卡就失效了。经过多次测试发现，卡内余额只要大于50元钱，当前卡就临时失效，而我们购买单张卡时，单张卡内有的余额正好就是50。也就说机器内固化了检测卡内余额的功能，实在是想不通为什么要这样的鸡肋功能，对于机器的可升级维护性造成了负担。</p>
-<p><strong>至此，这张卡我们就彻底弄清楚如何修改金额了。**</strong>虽然这只是一个较为简单的数据存放案例，但是作为M1卡入门还是不错的教程。希望这篇文章能为大家在RFID安全方向上起一个抛砖引玉的作用！<strong>**
-</strong></p>
-<p><strong>[本文作者diigu，本文属FreeBuf黑客与极客（FreeBuf.COM）独家文章，未经许可禁止转载]</strong></p>
-<p></p></div><br>
+        <p>RFID即为射频识别。NFC近场通信。很多人把NFC和RFID混为一谈，但实际上NFC可以理解为“以RFID技术为基础…</p>
       </p>
     </div>
     
@@ -232,10 +164,22 @@
         无线安全
       </a>
       
+      <a href="/tags/硬件/" rel="tag">
+        硬件
+      </a>
+      
+      <a href="/tags/RFID卡/" rel="tag">
+        RFID卡
+      </a>
+      
+      <a href="/tags/卡片分析/" rel="tag">
+        卡片分析
+      </a>
+      
     </div>
   </article>
 </div>
-        </div>
+        </div> 
       
     
 
